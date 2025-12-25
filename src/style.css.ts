@@ -1,4 +1,5 @@
-import { globalStyle, style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 const bottomBtn = style({
   position: 'fixed',
@@ -15,31 +16,66 @@ const container = style({
   gap: '1rem',
 });
 
-const box = style({
-  display: 'flex',
-  padding: '1rem',
-  flexDirection: 'column',
-  gap: '1rem',
-  borderRadius: '1rem',
-  backgroundColor: '#F3F4F5',
+const btnWhite = style({
+  backgroundColor: '#FFFFFF',
+});
+const btnQuiz = style({
+  backgroundColor: '#9933FF',
 });
 
-const row = style({
+const steps = style({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
+  gap: '4px',
+  margin: '2rem 0 1rem',
+  width: '100%',
+  justifyContent: 'center',
 });
 
-const switchItem = style({});
+const step = recipe({
+  base: {
+    width: '100%',
+    maxWidth: '64px',
+    height: '4px',
+    borderRadius: '100px',
+    backgroundColor: '#DCDCDD',
+    transition: 'all 0.3s ease-in-out',
+  },
+  variants: {
+    active: {
+      true: {
+        backgroundColor: '#9933FF',
+      },
+    },
+  },
+});
 
-globalStyle(`${switchItem} > span > span:first-child`, {
-  fontWeight: 500,
+const cellOption = recipe({
+  base: {
+    backgroundColor: '#EEEEFB8C',
+    border: '1px solid transparent',
+    borderRadius: '12px',
+    padding: '12px',
+    transition: 'all 0.3s ease-in-out',
+    cursor: 'pointer',
+    height: '72px',
+  },
+  variants: {
+    selected: {
+      true: {
+        borderColor: '#7A63F1',
+        backgroundColor: '#EEEDFF',
+      },
+    },
+  },
 });
 
 export const appSt = {
   bottomBtn,
   container,
-  box,
-  row,
-  switchItem,
+  cellOption,
+  btnWhite,
+  btnQuiz,
+  steps,
+  step,
 };

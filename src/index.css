@@ -8,13 +8,16 @@ body {
   font-family: 'Roboto', sans-serif;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background: linear-gradient(172.56deg, #3B0A72 -5.43%, #FDF8BD 40.77%, #08146C 86.97%);
   position: relative;
+  min-height: 100vh;
 }
 
 * {
   box-sizing: border-box;
 }
+
+
 
 
 [class^="slider__component_"] {

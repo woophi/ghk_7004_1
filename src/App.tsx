@@ -76,17 +76,27 @@ export const App = () => {
       LS.setItem(LSKeys.UserId, Date.now());
     }
   }, []);
+  useEffect(() => {
+    if (currentQuestion && view === 'quiz') {
+      window.gtag('event', '7307_question_show', {
+        question_id: `q${currentQuestion.id}`,
+        question_number: `${currentQuestion.id}`,
+      });
+    }
+  }, [currentQuestion, view]);
 
   useEffect(() => {
     if (view === 'quiz') {
       document.body.style.background = '#FFFFFF';
     } else {
+      window.gtag('event', '7307_quiz_show', { var: 'var1' });
       document.body.style.background = 'linear-gradient(172.56deg, #3B0A72 -5.43%, #FDF8BD 40.77%, #08146C 86.97%)';
     }
   }, [view]);
 
   const submit = () => {
     if (finished) {
+      window.gtag('event', '7307_result_show', { var: 'var1' });
       const fisrtAnswerIndex = questions[0].options.indexOf(
         answers.find(a => a.questionId === questions[0].id)?.answer || '',
       );
@@ -97,6 +107,7 @@ export const App = () => {
       if (!answers.some(a => a.questionId === currentQuestion.id)) {
         return;
       }
+      window.gtag('event', '7307_continue_click', { var: 'var1' });
       setActiveIndex(index => index + 1);
     }
     // sendDataToGA({
@@ -132,7 +143,13 @@ export const App = () => {
           {currentQuestion.options.map((option, index) => (
             <PureCell
               key={index}
-              onClick={() =>
+              onClick={() => {
+                window.gtag('event', '7307_answer_select', {
+                  question_id: `q${currentQuestion.id}`,
+                  question_number: `${currentQuestion.id}`,
+                  answer_id: `${index + 1}`,
+                  answer_number: `${index + 1}`,
+                });
                 setAnswers(
                   answers.some(a => a.questionId === currentQuestion.id)
                     ? answers.map(a =>
@@ -150,8 +167,8 @@ export const App = () => {
                           answer: option,
                         },
                       ],
-                )
-              }
+                );
+              }}
               className={appSt.cellOption({
                 selected: answers.some(a => a.questionId === currentQuestion.id && a.answer === option),
               })}
@@ -197,7 +214,15 @@ export const App = () => {
       <Gap size={96} />
 
       <div className={appSt.bottomBtn}>
-        <Button block view="secondary" onClick={() => setView('quiz')} className={appSt.btnWhite}>
+        <Button
+          block
+          view="secondary"
+          onClick={() => {
+            window.gtag('event', '7307_quiz_start', { var: 'var1' });
+            setView('quiz');
+          }}
+          className={appSt.btnWhite}
+        >
           Пройти тест
         </Button>
       </div>

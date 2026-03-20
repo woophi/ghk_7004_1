@@ -79,7 +79,7 @@ export const App = () => {
   useEffect(() => {
     if (currentQuestion && view === 'quiz') {
       window.gtag('event', '7307_question_show', {
-        question_id: `q${currentQuestion.id}`,
+        question: `q${currentQuestion.id}`,
       });
     }
   }, [currentQuestion, view]);
@@ -107,8 +107,8 @@ export const App = () => {
         return;
       }
       window.gtag('event', '7307_continue_click', {
-        question_id: `q${currentQuestion.id}`,
-        answer_id: `${currentQuestion.options.indexOf(answers.find(a => a.questionId === currentQuestion.id)?.answer || '') + 1}`,
+        question: `q${currentQuestion.id}`,
+        answer: `q${currentQuestion.id}_a${currentQuestion.options.indexOf(answers.find(a => a.questionId === currentQuestion.id)?.answer || '') + 1}`,
       });
       setActiveIndex(index => index + 1);
     }
